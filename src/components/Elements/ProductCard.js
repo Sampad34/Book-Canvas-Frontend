@@ -11,7 +11,11 @@ export const ProductCard = ({ product }) => {
 
   useEffect(() => {
     const productInCart = cartList.find((item) => item.id === product.id);
-    setInCart(!!productInCart);
+    if (productInCart) {
+      setInCart(true);
+    } else {
+      setInCart(false);
+    }
   }, [cartList, product.id]);
 
   return (
@@ -22,15 +26,8 @@ export const ProductCard = ({ product }) => {
             Best Seller
           </span>
         )}
-
-        {/* ✅ Use correct poster URL */}
-        <img
-          className="rounded-t-lg w-full h-64 object-cover"
-          src={`${process.env.REACT_APP_HOST}${poster}`}
-          alt={name}
-        />
+        <img className="rounded-t-lg w-full h-64" src={poster} alt={name} />
       </Link>
-
       <div className="p-5">
         <Link to={`/products/${id}`}>
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -42,6 +39,11 @@ export const ProductCard = ({ product }) => {
         </p>
 
         <div className="flex items-center my-2">
+          {/* <i className="text-lg bi bi-star-fill text-yellow-500 mr-1"></i>
+                <i className="text-lg bi bi-star-fill text-yellow-500 mr-1"></i>
+                <i className="text-lg bi bi-star-fill text-yellow-500 mr-1"></i>
+                <i className="text-lg bi bi-star-fill text-yellow-500 mr-1"></i>
+                <i className="text-lg bi bi-star text-yellow-500 mr-1"></i>*/}
           <Ratings rating={rating} />
         </div>
 
@@ -50,21 +52,24 @@ export const ProductCard = ({ product }) => {
             <span>$</span>
             <span>{price}</span>
           </span>
-
-          {!inCart ? (
+          {!inCart && (
             <button
               onClick={() => addToCart(product)}
               className={`inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 ${
                 product.in_stock ? "" : "cursor-not-allowed"
               }`}
-              disabled={!product.in_stock}
+              disabled={product.in_stock ? "" : "disabled"}
             >
               Add To Cart <i className="ml-1 bi bi-plus-lg"></i>
             </button>
-          ) : (
+          )}
+          {inCart && (
             <button
               onClick={() => removeFromCart(product)}
-              className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800"
+              className={`inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 ${
+                product.in_stock ? "" : "cursor-not-allowed"
+              }`}
+              disabled={product.in_stock ? "" : "disabled"}
             >
               Remove Item <i className="ml-1 bi bi-trash3"></i>
             </button>
