@@ -36,7 +36,7 @@ export async function createOrder(cartList, total, user) {
   const { token } = getSession();
 
   const order = {
-    cartList: cartList,
+    cartList,
     amount_paid: total,
     quantity: cartList.length,
     user: {

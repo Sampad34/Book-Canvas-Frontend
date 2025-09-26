@@ -1,5 +1,5 @@
 // services/authService.js
-import { handleResponse } from "./utils";  // removed parseJSONSafe
+import { handleResponse } from "./utils";
 
 export async function login(authDetail) {
   const response = await fetch(`${process.env.REACT_APP_HOST}/login`, {
@@ -11,8 +11,8 @@ export async function login(authDetail) {
   const data = await handleResponse(response);
 
   if (data?.accessToken && data?.user) {
-    sessionStorage.setItem("token", data.accessToken);
-    sessionStorage.setItem("cbid", data.user.id);
+    sessionStorage.setItem("token", JSON.stringify(data.accessToken));
+    sessionStorage.setItem("cbid", JSON.stringify(data.user.id));
   }
 
   return data;
@@ -28,8 +28,8 @@ export async function register(authDetail) {
   const data = await handleResponse(response);
 
   if (data?.accessToken && data?.user) {
-    sessionStorage.setItem("token", data.accessToken);
-    sessionStorage.setItem("cbid", data.user.id);
+    sessionStorage.setItem("token", JSON.stringify(data.accessToken));
+    sessionStorage.setItem("cbid", JSON.stringify(data.user.id));
   }
 
   return data;

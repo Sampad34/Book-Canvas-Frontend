@@ -3,11 +3,8 @@ import { handleResponse } from "./utils";
 
 export async function getProductList(searchTerm) {
   const response = await fetch(
-    `${process.env.REACT_APP_HOST}/444/products?name_like=${
-      searchTerm ? searchTerm : ""
-    }`
+    `${process.env.REACT_APP_HOST}/444/products?name_like=${searchTerm || ""}`
   );
-
   return await handleResponse(response);
 }
 
