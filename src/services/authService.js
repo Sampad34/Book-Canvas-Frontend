@@ -1,10 +1,5 @@
-async function parseJSONSafe(response) {
-  try {
-    return await response.json();
-  } catch {
-    return null; // return null if response is not JSON
-  }
-}
+// services/authService.js
+import { handleResponse } from "./utils";  // removed parseJSONSafe
 
 export async function login(authDetail) {
   const response = await fetch(`${process.env.REACT_APP_HOST}/login`, {
@@ -13,12 +8,7 @@ export async function login(authDetail) {
     body: JSON.stringify(authDetail),
   });
 
-  const data = await parseJSONSafe(response);
-
-  if (!response.ok) {
-    const errorMessage = data?.message || response.statusText || "Login failed";
-    throw { message: errorMessage, status: response.status };   //eslint-disable-line
-  }
+  const data = await handleResponse(response);
 
   if (data?.accessToken && data?.user) {
     sessionStorage.setItem("token", data.accessToken);
@@ -35,12 +25,7 @@ export async function register(authDetail) {
     body: JSON.stringify(authDetail),
   });
 
-  const data = await parseJSONSafe(response);
-
-  if (!response.ok) {
-    const errorMessage = data?.message || response.statusText || "Registration failed";
-    throw { message: errorMessage, status: response.status };   //eslint-disable-line
-  }
+  const data = await handleResponse(response);
 
   if (data?.accessToken && data?.user) {
     sessionStorage.setItem("token", data.accessToken);

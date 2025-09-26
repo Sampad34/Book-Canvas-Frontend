@@ -1,56 +1,39 @@
-function getSession() {
-  const token = JSON.parse(sessionStorage.getItem("token"));
-  const cbid = JSON.parse(sessionStorage.getItem("cbid"));
-
-  return { token, cbid };
-}
+// services/dataService.js
+import { getSession, handleResponse } from "./utils";
 
 export async function getUser() {
-  const browserData = getSession();
+  const { token, cbid } = getSession();
 
-  const requestOptions = {
+  const response = await fetch(`${process.env.REACT_APP_HOST}/600/users/${cbid}`, {
     method: "GET",
     headers: {
-      "content-Type": "application/json",
-      Authorization: `Bearer ${browserData.token}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-  };
-  const response = await fetch(
-    `${process.env.REACT_APP_HOST}/600/users/${browserData.cbid}`,
-    requestOptions
-  );
-  if (!response.ok) {
-    throw { message: response.statusText, status: response.status }; //eslint-disable-line
-  }
+  });
 
-  const data = await response.json();
-  return data;
+  return await handleResponse(response);
 }
 
 export async function getUserOrders() {
-  const browserData = getSession();
+  const { token, cbid } = getSession();
 
   const response = await fetch(
-    `${process.env.REACT_APP_HOST}/660/orders?user.id=${browserData.cbid}`,
+    `${process.env.REACT_APP_HOST}/660/orders?user.id=${cbid}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${browserData.token}`,
+        Authorization: `Bearer ${token}`,
       },
     }
   );
 
-  if (!response.ok) {
-    throw { message: response.statusText, status: response.status }; //eslint-disable-line
-  }
-
-  const data = await response.json();
-  return data;
+  return await handleResponse(response);
 }
 
 export async function createOrder(cartList, total, user) {
-  const browserData = getSession();
+  const { token } = getSession();
 
   const order = {
     cartList: cartList,
@@ -67,14 +50,10 @@ export async function createOrder(cartList, total, user) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${browserData.token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(order),
   });
 
-  if (!response.ok) {
-    throw { message: response.statusText, status: response.status }; //eslint-disable-line
-  }
-  const data = await response.json();
-  return data;
+  return await handleResponse(response);
 }
