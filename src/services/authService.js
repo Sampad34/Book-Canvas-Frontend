@@ -1,54 +1,59 @@
-export async function login(authDetail) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "content-Type": "application/json" },
-    body: JSON.stringify(authDetail),
-  };
 
-  const response = await fetch(
-    `${process.env.REACT_APP_HOST}/login`,
-    requestOptions
-  );
+const BASE_URL = process.env.REACT_APP_HOST;
+
+
+export async function login(authDetail) {
+  const response = await fetch(`${BASE_URL}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(authDetail),
+  });
+
   if (!response.ok) {
-    throw { message: response.statusText, status: response.status }; //eslint-disable-line
+    let errorMessage = response.statusText;
+    try {
+      const errorData = await response.json();
+      if (errorData?.message) errorMessage = errorData.message;
+    } catch (err) {
+      // ignore JSON parsing errors
+    }
+    throw { message: errorMessage, status: response.status };
   }
 
   const data = await response.json();
 
-  if (data.accessToken) {
-    sessionStorage.setItem("token", JSON.stringify(data.accessToken));
-    sessionStorage.setItem("cbid", JSON.stringify(data.user.id));
+  if (data.accessToken && data.user) {
+    sessionStorage.setItem("token", data.accessToken);
+    sessionStorage.setItem("cbid", data.user.id);
   }
 
   return data;
 }
 
 export async function register(authDetail) {
-  const requestOptions = {
+  const response = await fetch(`${BASE_URL}/register`, {
     method: "POST",
-    headers: { "content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(authDetail),
-  };
-
-  const response = await fetch(
-    `${process.env.REACT_APP_HOST}/register`,
-    requestOptions
-  );
+  });
 
   if (!response.ok) {
-    throw { message: response.statusText, status: response.status }; //eslint-disable-line
+    let errorMessage = response.statusText;
+    try {
+      const errorData = await response.json();
+      if (errorData?.message) errorMessage = errorData.message;
+    } catch (err) {
+      // ignore JSON parsing errors
+    }
+    throw { message: errorMessage, status: response.status };
   }
 
   const data = await response.json();
-  if (data.accessToken) {
-    sessionStorage.setItem("token", JSON.stringify(data.accessToken));
-    sessionStorage.setItem("cbid", JSON.stringify(data.user.id));
+
+  if (data.accessToken && data.user) {
+    sessionStorage.setItem("token", data.accessToken);
+    sessionStorage.setItem("cbid", data.user.id);
   }
 
   return data;
-}
-
-export function logout() {
-  sessionStorage.removeItem("token");
-  sessionStorage.removeItem("cbid");
 }
