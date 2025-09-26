@@ -26,7 +26,7 @@ export const ProductCard = ({ product }) => {
         {/* ✅ Use correct poster URL */}
         <img
           className="rounded-t-lg w-full h-64 object-cover"
-          src={poster.startsWith("http") ? poster : `${process.env.REACT_APP_HOST}${poster}`}
+          src={`${process.env.REACT_APP_HOST}${poster}`}
           alt={name}
         />
       </Link>
