@@ -9,7 +9,7 @@ export const CartCard = ({product}) => {
     <div className="flex flex-wrap justify-between border-b dark:border-slate-700 max-w-4xl m-auto p-2 mb-5 ">
       <div className="flex">
           <Link to="">
-            <img className="w-32 rounded" src={product.poster} alt={product.name} />
+            <img className="w-32 rounded" src={`${process.env.REACT_APP_HOST}${product.poster}`} alt={product.name} />
           </Link>
           <div className="">
             <Link to={`products/${product.id}`}>
