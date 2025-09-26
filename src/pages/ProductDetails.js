@@ -52,7 +52,7 @@ export const ProductDetails = () => {
           <div className="max-w-xl my-3">
             <img
               className="rounded"
-              src={product.poster}
+              src={`${process.env.REACT_APP_HOST}${product.poster}`}
               alt={product.name}
             />
           </div>
