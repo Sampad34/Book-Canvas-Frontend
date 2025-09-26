@@ -5,18 +5,26 @@ import { Search } from "../Sections/Search";
 import { DropdownLoggedOut, DropdownLoggedIn } from "../index";
 import { useCart } from "../../context";
 
+// Utility to safely parse JSON
+const safeParseJSON = (value, fallback = null) => {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return fallback;
+  }
+};
+
 export const Header = () => {
   const { cartList } = useCart();
 
   const [darkMode, setDarkMode] = useState(
-    JSON.parse(localStorage.getItem("darkMode")) || false
+    safeParseJSON(localStorage.getItem("darkMode"), false)
   );
 
   const [searchSection, setSearchSection] = useState(false);
-
   const [dropdown, setDropdown] = useState(false);
 
-  const token = JSON.parse(sessionStorage.getItem("token"));
+  const token = safeParseJSON(sessionStorage.getItem("token"), null);
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
