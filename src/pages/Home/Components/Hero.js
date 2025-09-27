@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export const Hero = () => {
+  // Generate a random number for cache busting
+  const randomNum = Math.floor(Math.random() * 1000);
+
   return (
     <section className="flex flex-col-reverse lg:flex-row items-center justify-between px-6 md:px-12 lg:px-20 py-12 md:py-16 bg-gray-50 dark:bg-gray-900 dark:text-slate-100">
       
@@ -25,7 +28,7 @@ export const Hero = () => {
       {/* Visual Section */}
       <div className="flex-1 flex justify-center lg:justify-end">
         <img
-          src="https://source.unsplash.com/random/?programming,code,technology&1"
+          src={`https://source.unsplash.com/800x600/?programming,technology,code&${randomNum}`}
           alt="Hero illustration"
           className="w-full max-w-md sm:max-w-lg md:max-w-xl rounded-lg shadow-xl"
         />
