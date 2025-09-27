@@ -1,26 +1,39 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../../../context";
 
-export const CartCard = ({product}) => {
-
-   const {removeFromCart}=useCart();
+export const CartCard = ({ product }) => {
+  const { removeFromCart } = useCart();
 
   return (
-    <div className="flex flex-wrap justify-between border-b dark:border-slate-700 max-w-4xl m-auto p-2 mb-5 ">
-      <div className="flex">
-          <Link to="">
-            <img className="w-32 rounded" src={`${process.env.REACT_APP_HOST}${product.poster}`} alt={product.name} />
+    <div className="flex flex-col sm:flex-row justify-between items-center border-b dark:border-slate-700 max-w-4xl mx-auto p-4 mb-5 gap-4 sm:gap-0">
+      {/* Product Info */}
+      <div className="flex items-center gap-4 w-full sm:w-auto">
+        <Link to={`products/${product.id}`}>
+          <img
+            className="w-24 sm:w-32 h-24 sm:h-32 object-cover rounded-lg"
+            src={`${process.env.REACT_APP_HOST}${product.poster}`}
+            alt={product.name}
+          />
+        </Link>
+        <div className="flex flex-col justify-between">
+          <Link to={`products/${product.id}`}>
+            <p className="text-lg font-medium text-gray-900 dark:text-slate-200 hover:underline">
+              {product.name}
+            </p>
           </Link>
-          <div className="">
-            <Link to={`products/${product.id}`}>
-              <p className="text-lg ml-2 dark:text-slate-200">{product.name}</p>
-            </Link>            
-            <button onClick={() => removeFromCart(product)} className="text-base ml-2 text-red-400">Remove</button>
-          </div>
+          <button
+            onClick={() => removeFromCart(product)}
+            className="mt-2 text-sm text-red-500 hover:text-red-600 transition"
+          >
+            Remove
+          </button>
+        </div>
       </div>
-      <div className="text-lg m-2 dark:text-slate-200">
-        <span>{product.price}</span>
+
+      {/* Price */}
+      <div className="text-lg font-semibold text-gray-800 dark:text-slate-200 mt-2 sm:mt-0">
+        ${product.price}
       </div>
     </div>
-  )
-}
+  );
+};

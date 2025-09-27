@@ -1,25 +1,21 @@
 export const Ratings = ({ rating }) => {
-  let ratingArray = Array(5).fill(false);
-  for (let i = 0; i < rating; i++) {
-    ratingArray[i] = true;
-  }
+  const ratingArray = Array.from({ length: 5 }, (_, i) => i < rating);
 
   return (
-    <>
-    {/* if value is true show filled star otherwise show blank star */}
-      {ratingArray.map((value, index) =>
-        value ? (
+    <div className="flex items-center space-x-0.5">
+      {ratingArray.map((filled, index) =>
+        filled ? (
           <i
             key={index}
-            className="text-lg bi bi-star-fill text-yellow-500 mr-1"
+            className="bi bi-star-fill text-yellow-400 sm:text-base text-sm"
           ></i>
         ) : (
           <i
             key={index}
-            className="text-lg bi bi-star text-yellow-500 mr-1"
+            className="bi bi-star text-yellow-400 sm:text-base text-sm"
           ></i>
         )
       )}
-    </>
+    </div>
   );
 };

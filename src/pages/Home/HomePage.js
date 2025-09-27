@@ -5,7 +5,7 @@ import { Testimonials } from "./Components/Testimonials";
 import { Faq } from "./Components/Faq";
 
 export const HomePage = () => {
-  UseTitle("Access Computer Science Ebooks");
+  UseTitle("Get access to Computer Science Ebooks");
   return (
     <main>
       <div>

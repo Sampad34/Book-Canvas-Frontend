@@ -19,11 +19,10 @@ export const ProductDetails = () => {
         const data = await getProduct(id);
         setProduct(data);
       } catch (error) {
-        toast.error(error.message, {
+        toast.error(error.message || "Failed to fetch product details", {
           closeButton: true,
           position: "bottom-center",
           autoClose: 5000,
-          closeOnClick: true,
         });
       }
     }
@@ -31,87 +30,87 @@ export const ProductDetails = () => {
   }, [id]);
 
   useEffect(() => {
-    const productInCart = cartList.find((item) => item.id === product.id);
-    if (productInCart) {
-      setInCart(true);
-    } else {
-      setInCart(false);
-    }
+    setInCart(cartList.some((item) => item.id === product.id));
   }, [cartList, product.id]);
 
   return (
-    <main>
+    <main className="px-4 md:px-10 lg:px-20 py-10">
       <section>
-        <h1 className="mt-10 mb-5 text-4xl text-center font-bold text-gray-900 dark:text-slate-200">
+        <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-900 dark:text-slate-200 mb-4">
           {product.name}
         </h1>
-        <p className="mb-5 text-lg text-center text-gray-900 dark:text-slate-200">
+        <p className="text-lg md:text-xl text-center text-gray-700 dark:text-slate-300 mb-8">
           {product.overview}
         </p>
-        <div className="flex flex-wrap justify-around">
-          <div className="max-w-xl my-3">
+
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-10">
+          {/* Product Image */}
+          <div className="flex-shrink-0 max-w-md w-full rounded-lg overflow-hidden shadow-lg">
             <img
-              className="rounded"
               src={`${process.env.REACT_APP_HOST}${product.poster}`}
               alt={product.name}
+              className="w-full h-auto object-cover"
             />
           </div>
-          <div className="max-w-xl my-3">
+
+          {/* Product Info */}
+          <div className="max-w-xl w-full space-y-5">
             <p className="text-3xl font-bold text-gray-900 dark:text-slate-200">
-              <span className="mr-1">$</span>
-              <span className="">{product.price}</span>
+              ${product.price}
             </p>
-            <p className="my-3">
-              <span>
-                <Ratings rating={product.rating} />
-              </span>
-            </p>
-            <p className="my-4 select-none">
+
+            <Ratings rating={product.rating} />
+
+            <div className="flex flex-wrap gap-2">
               {product.best_seller && (
-                <span className="font-semibold text-amber-500 border bg-amber-50 rounded-lg px-3 py-1 mr-2">
+                <span className="bg-amber-50 text-amber-600 font-semibold px-3 py-1 rounded-lg border">
                   BEST SELLER
                 </span>
               )}
               {product.in_stock && (
-                <span className="font-semibold text-emerald-600	border bg-slate-100 rounded-lg px-3 py-1 mr-2">
-                  INSTOCK
+                <span className="bg-emerald-50 text-emerald-600 font-semibold px-3 py-1 rounded-lg border">
+                  IN STOCK
                 </span>
               )}
-
               {!product.in_stock && (
-                <span className="font-semibold text-rose-700 border bg-slate-100 rounded-lg px-3 py-1 mr-2">
+                <span className="bg-rose-50 text-rose-600 font-semibold px-3 py-1 rounded-lg border">
                   OUT OF STOCK
                 </span>
               )}
-              <span className="font-semibold text-blue-500 border bg-slate-100 rounded-lg px-3 py-1 mr-2">
+              <span className="bg-blue-50 text-blue-600 font-semibold px-3 py-1 rounded-lg border">
                 {product.size} MB
               </span>
-            </p>
-            <p className="my-3">
-              {!inCart && (
+            </div>
+
+            <div>
+              {!inCart ? (
                 <button
                   onClick={() => addToCart(product)}
-                  className={`inline-flex items-center py-2 px-5 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 ${
-                    product.in_stock ? "" : "cursor-not-allowed"
+                  disabled={!product.in_stock}
+                  className={`w-full sm:w-auto inline-flex items-center justify-center py-3 px-6 text-lg font-medium text-white rounded-lg shadow-lg transition-all duration-300 hover:bg-blue-800 ${
+                    product.in_stock
+                      ? "bg-blue-700 cursor-pointer"
+                      : "bg-gray-400 cursor-not-allowed"
                   }`}
-                  disabled={product.in_stock ? "" : "disabled"}
                 >
-                  Add To Cart <i className="ml-1 bi bi-plus-lg"></i>
+                  Add To Cart <i className="ml-2 bi bi-plus-lg"></i>
                 </button>
-              )}
-              {inCart && (
+              ) : (
                 <button
                   onClick={() => removeFromCart(product)}
-                  className={`inline-flex items-center py-2 px-5 text-lg font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 ${
-                    product.in_stock ? "" : "cursor-not-allowed"
+                  disabled={!product.in_stock}
+                  className={`w-full sm:w-auto inline-flex items-center justify-center py-3 px-6 text-lg font-medium text-white rounded-lg shadow-lg transition-all duration-300 hover:bg-red-800 ${
+                    product.in_stock
+                      ? "bg-red-600 cursor-pointer"
+                      : "bg-gray-400 cursor-not-allowed"
                   }`}
-                  disabled={product.in_stock ? "" : "disabled"}
                 >
-                  Remove Item <i className="ml-1 bi bi-trash3"></i>
+                  Remove Item <i className="ml-2 bi bi-trash3"></i>
                 </button>
               )}
-            </p>
-            <p className="text-lg text-gray-900 dark:text-slate-200">
+            </div>
+
+            <p className="text-gray-700 dark:text-slate-300 leading-relaxed">
               {product.long_description}
             </p>
           </div>

@@ -12,25 +12,27 @@ export const Search = ({ setSearchSection }) => {
   };
 
   return (
-    <div className="mx-auto max-w-screen-xl p-2 my-5">
-      <form onSubmit={handleSearch} className="flex items-center">
+    <div className="mx-auto max-w-screen-xl p-4 my-5">
+      <form onSubmit={handleSearch} className="flex flex-col sm:flex-row items-center gap-2">
         <div className="relative w-full">
-          <span className="bi bi-search flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"></span>
+          <span className="bi bi-search absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400"></span>
           <input
             ref={searchRef}
             name="search"
             type="text"
             id="simple-search"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search"
+            placeholder="Search products..."
             autoComplete="off"
-            required=""
+            required
+            className="w-full pl-10 pr-4 py-2.5 text-sm rounded-lg border border-gray-300 bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 transition"
           />
         </div>
         <button
           type="submit"
-          className="bi bi-search py-2.5 px-3 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        ></button>
+          className="flex items-center justify-center px-4 py-2 rounded-lg bg-blue-700 text-white text-sm font-medium border border-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition"
+        >
+          <span className="bi bi-search text-lg"></span>
+        </button>
       </form>
     </div>
   );

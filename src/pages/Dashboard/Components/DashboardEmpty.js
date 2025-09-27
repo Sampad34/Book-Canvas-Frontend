@@ -1,12 +1,19 @@
 export const DashboardEmpty = () => {
   return (
-    <section className="text-xl text-center max-w-4xl mx-auto my-10 py-5 dark:text-slate-100 border dark:border-slate-700 rounded">
-        <div className="my-5">
-            <p className="bi bi-cart text-green-600 text-7xl mb-5"></p>
-            <p>Oops! Your order dashboard looks empty!</p>
-            <p>Add eBooks to your cart from our store collection.</p>
-        </div>
-        <a href="/" type="button" className="text-white bg-blue-700 hover:bg-blue-800 rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none">Continue Shopping <i className="ml-2 bi bi-cart"></i></a>
-    </section>  
-  )
-}
+    <section className="max-w-4xl mx-auto my-10 p-6 text-center border rounded-lg shadow-sm dark:border-slate-700 dark:bg-gray-800 dark:text-slate-100">
+      <div className="flex flex-col items-center gap-4">
+        <p className="bi bi-cart text-green-500 text-7xl"></p>
+        <p className="text-2xl font-semibold">Oops! Your order dashboard looks empty!</p>
+        <p className="text-gray-700 dark:text-gray-300">
+          Add eBooks to your cart from our store collection.
+        </p>
+        <a
+          href="/"
+          className="mt-4 inline-flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-lg px-6 py-3 transition duration-200 ease-in-out dark:bg-blue-600 dark:hover:bg-blue-700"
+        >
+          Continue Shopping <i className="ml-2 bi bi-cart"></i>
+        </a>
+      </div>
+    </section>
+  );
+};

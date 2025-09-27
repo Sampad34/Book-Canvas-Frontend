@@ -5,62 +5,34 @@ export const Accordion = ({ faq }) => {
   const [show, setShow] = useState(false);
 
   return (
-    <div>
-      <h2 id="accordion-flush-heading-1">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
+      <h2 id="accordion-heading" className="">
         <button
           onClick={() => setShow(!show)}
           type="button"
-          className="text-lg flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
-          data-accordion-target="#accordion-flush-body-1"
-          aria-expanded="true"
-          aria-controls="accordion-flush-body-1"
+          className="flex items-center justify-between w-full p-5 text-left text-lg font-medium text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+          aria-expanded={show}
+          aria-controls="accordion-body"
         >
-          <span className="text-xl text-slate-900 dark:text-white">
-            {question}
-          </span>
-          {!show && (
-            <svg
-              data-accordion-icon
-              className="w-6 h-6 shrink-0"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          )}
-          {show && (
-            <svg
-              data-accordion-icon
-              className="rotate-180 w-6 h-6 shrink-0"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          )}
+          <span>{question}</span>
+          <svg
+            className={`w-6 h-6 transition-transform duration-300 ${show ? "rotate-180" : ""}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
         </button>
       </h2>
       {show && (
         <div
-          id="accordion-flush-body-1"
-          className=""
-          aria-labelledby="accordion-flush-heading-1"
+          id="accordion-body"
+          className="p-5 text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 transition"
+          aria-labelledby="accordion-heading"
         >
-          <div className="py-5 border-b border-gray-200 dark:border-gray-700">
-            <p className="text-lg mb-2 text-gray-500 dark:text-gray-400">
-              {answer}
-            </p>
-          </div>
+          <p className="text-base leading-relaxed">{answer}</p>
         </div>
       )}
     </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { register } from "../services/authService"; // make sure path is correct
+import { register } from "../services/authService";
 import { UseTitle } from "../hooks/UseTitle";
 
 export const Register = () => {
@@ -27,7 +27,6 @@ export const Register = () => {
           position: "bottom-center",
           autoClose: 3000,
         });
-        // clear form
         event.target.reset();
         navigate("/products");
       } else {
@@ -48,35 +47,90 @@ export const Register = () => {
   }
 
   return (
-    <main className="max-w-md mx-auto">
-      <section>
-        <p className="text-2xl text-center font-semibold dark:text-slate-100 my-10 underline underline-offset-8">
-          Register Here
+    <main className="flex justify-center items-center min-h-screen px-4 bg-gray-50 dark:bg-gray-900">
+      <section className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+        <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-8 underline underline-offset-4">
+          Register
+        </h1>
+
+        <form onSubmit={handleRegister} className="space-y-6">
+          <div>
+            <label
+              htmlFor="name"
+              className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Your Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Sampad Roy Barman"
+              required
+              autoComplete="off"
+              className="w-full p-3 text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Your Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+              autoComplete="off"
+              className="w-full p-3 text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="password"
+              className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Your Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              minLength={7}
+              placeholder="••••••••"
+              className="w-full p-3 text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 text-lg font-medium text-white rounded-lg shadow-md transition-all duration-300 focus:outline-none ${
+              loading
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:ring-blue-500"
+            }`}
+          >
+            {loading ? "Registering..." : "Register"}
+          </button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+          Already have an account?{" "}
+          <a
+            href="/login"
+            className="text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            Login here
+          </a>
         </p>
       </section>
-      <form onSubmit={handleRegister}>
-        <div className="mb-6">
-          <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Your name
-          </label>
-          <input type="text" id="name" name="name" placeholder="Sampad Roy Barman" required autoComplete="off" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Your email
-          </label>
-          <input type="email" id="email" name="email" placeholder="sampadrb@example.com" required autoComplete="off" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Your password
-          </label>
-          <input type="password" id="password" name="password" required minLength={7} className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" />
-        </div>
-        <button type="submit" disabled={loading} className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
-          {loading ? "Registering..." : "Register"}
-        </button>
-      </form>
     </main>
   );
 };
