@@ -28,7 +28,7 @@ export const Hero = () => {
       {/* Visual Section */}
       <div className="flex-1 flex justify-center lg:justify-end">
         <img
-          src={`https://source.unsplash.com/800x600/?programming,technology,code&${randomNum}`}
+          src={`https://source.unsplash.com/random/800x600?programming,technology,code&sig=${randomNum}`}
           alt="Hero illustration"
           className="w-full max-w-md sm:max-w-lg md:max-w-xl rounded-lg shadow-xl"
         />
