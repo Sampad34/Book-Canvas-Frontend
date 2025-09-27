@@ -33,35 +33,33 @@ export const Testimonials = () => {
   ];
 
   return (
-    <section className="my-20 px-6 md:px-12">
-      <h1 className="text-3xl sm:text-4xl text-center font-semibold dark:text-slate-100 mb-10 underline underline-offset-8">
+    <section className="my-16 md:my-20 px-4 sm:px-6 md:px-12 lg:px-16">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl text-center font-extrabold dark:text-slate-100 mb-12 underline underline-offset-8">
         What Our Students Say
       </h1>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
         {testimonials.map((t, index) => (
           <figure
             key={index}
-            className="flex flex-col justify-between items-center p-6 bg-white rounded-xl border border-gray-200 shadow-lg dark:bg-gray-800 dark:border-gray-700 text-center transition-transform transform hover:-translate-y-1 hover:shadow-2xl"
+            className="flex flex-col justify-between items-center p-6 bg-white rounded-xl border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 text-center transition-transform transform hover:-translate-y-2 hover:shadow-xl"
           >
             <blockquote className="mb-6 text-gray-600 dark:text-gray-300">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
                 {t.title}
               </h3>
-              <p className="text-sm font-light">{t.text}</p>
+              <p className="text-sm sm:text-base font-light">{t.text}</p>
             </blockquote>
 
             <figcaption className="flex flex-col items-center space-y-2">
               <img
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover"
                 src={t.image}
                 alt={t.name}
               />
-              <div className="text-left">
-                <p className="font-medium text-gray-900 dark:text-white">
-                  {t.name}
-                </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">{t.role}</p>
+              <div className="text-center sm:text-left">
+                <p className="font-medium text-gray-900 dark:text-white">{t.name}</p>
+                <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">{t.role}</p>
               </div>
             </figcaption>
           </figure>

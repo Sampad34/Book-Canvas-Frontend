@@ -47,19 +47,20 @@ export const Register = () => {
   }
 
   return (
-    <main className="flex justify-center items-center min-h-screen px-4 bg-gray-50 dark:bg-gray-900">
-      <section className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
-        <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-white mb-8 underline underline-offset-4">
+    <main className="flex justify-center items-center min-h-screen px-4 sm:px-6 bg-gray-50 dark:bg-gray-900">
+      <section className="w-full max-w-md p-8 sm:p-10 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center text-gray-900 dark:text-white mb-8 underline underline-offset-4">
           Register
         </h1>
 
         <form onSubmit={handleRegister} className="space-y-6">
+          {/* Name Field */}
           <div>
             <label
               htmlFor="name"
               className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Your Name
+              Name
             </label>
             <input
               type="text"
@@ -68,16 +69,17 @@ export const Register = () => {
               placeholder="Sampad Roy Barman"
               required
               autoComplete="off"
-              className="w-full p-3 text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              className="w-full p-3 sm:p-4 text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
             />
           </div>
 
+          {/* Email Field */}
           <div>
             <label
               htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Your Email
+              Email Address
             </label>
             <input
               type="email"
@@ -86,16 +88,17 @@ export const Register = () => {
               placeholder="you@example.com"
               required
               autoComplete="off"
-              className="w-full p-3 text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              className="w-full p-3 sm:p-4 text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
             />
           </div>
 
+          {/* Password Field */}
           <div>
             <label
               htmlFor="password"
               className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Your Password
+              Password
             </label>
             <input
               type="password"
@@ -104,14 +107,15 @@ export const Register = () => {
               required
               minLength={7}
               placeholder="••••••••"
-              className="w-full p-3 text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              className="w-full p-3 sm:p-4 text-gray-900 dark:text-gray-100 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
             />
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 text-lg font-medium text-white rounded-lg shadow-md transition-all duration-300 focus:outline-none ${
+            className={`w-full py-3 sm:py-4 text-lg sm:text-xl font-medium text-white rounded-lg shadow-md transition-all duration-300 focus:outline-none ${
               loading
                 ? "bg-blue-400 cursor-not-allowed"
                 : "bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:ring-blue-500"
@@ -121,11 +125,12 @@ export const Register = () => {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
+        {/* Login Link */}
+        <p className="mt-6 text-center text-sm sm:text-base text-gray-600 dark:text-gray-400">
           Already have an account?{" "}
           <a
             href="/login"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
+            className="text-blue-600 dark:text-blue-400 font-medium hover:underline"
           >
             Login here
           </a>

@@ -53,18 +53,19 @@ export const Checkout = ({ setCheckout }) => {
 
       {/* Modal */}
       <div
-        id="authentication-modal"
+        id="checkout-modal"
         tabIndex="-1"
-        className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4 md:p-6"
+        className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4 sm:p-6"
         aria-modal="true"
         role="dialog"
       >
-        <div className="relative w-full max-w-md md:max-w-lg bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <div className="relative w-full max-w-md sm:max-w-lg md:max-w-xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
+          
           {/* Close Button */}
           <button
             onClick={() => setCheckout(false)}
             type="button"
-            className="absolute top-3 right-3 text-gray-400 hover:text-gray-900 dark:hover:text-white bg-transparent rounded-lg p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            className="absolute top-3 right-3 text-gray-400 hover:text-gray-900 dark:hover:text-white bg-transparent rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
           >
             <svg
               aria-hidden="true"
@@ -82,48 +83,48 @@ export const Checkout = ({ setCheckout }) => {
           </button>
 
           {/* Modal Content */}
-          <div className="px-6 py-8 md:px-8">
-            <h3 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center justify-center gap-2">
+          <div className="px-6 py-8 sm:px-8 md:px-10">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center justify-center gap-2">
               <i className="bi bi-credit-card"></i> Card Payment
             </h3>
 
             <form onSubmit={handleOrderSubmit} className="space-y-4">
               {/* Name */}
               <div>
-                <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <label className="block mb-1 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
                   Name
                 </label>
                 <input
                   type="text"
                   value={user.name}
                   disabled
-                  className="w-full p-2.5 text-gray-900 dark:text-white text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                 />
               </div>
 
               {/* Email */}
               <div>
-                <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <label className="block mb-1 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
                   Email
                 </label>
                 <input
                   type="email"
                   value={user.email}
                   disabled
-                  className="w-full p-2.5 text-gray-900 dark:text-white text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
                 />
               </div>
 
               {/* Card Number */}
               <div>
-                <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <label className="block mb-1 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
                   Card Number
                 </label>
                 <input
                   type="text"
                   value="4215 6254 6259 7845"
                   disabled
-                  className="w-full p-2.5 text-gray-900 dark:text-white text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
+                  className="w-full p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
                 />
               </div>
 
@@ -133,38 +134,38 @@ export const Checkout = ({ setCheckout }) => {
                   type="text"
                   value="03"
                   disabled
-                  className="w-1/2 p-2.5 text-gray-900 dark:text-white text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
+                  className="w-1/2 p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
                 />
                 <input
                   type="text"
                   value="27"
                   disabled
-                  className="w-1/2 p-2.5 text-gray-900 dark:text-white text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
+                  className="w-1/2 p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
                 />
               </div>
 
               {/* Security Code */}
               <div>
-                <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <label className="block mb-1 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
                   Security Code
                 </label>
                 <input
                   type="text"
                   value="523"
                   disabled
-                  className="w-full p-2.5 text-gray-900 dark:text-white text-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
+                  className="w-full p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
                 />
               </div>
 
               {/* Total */}
-              <p className="text-center text-2xl font-bold text-lime-500 my-2">
-                ${total}
+              <p className="text-center text-2xl sm:text-3xl font-bold text-lime-500 my-3">
+                ${total.toFixed(2)}
               </p>
 
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full py-2.5 text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition"
+                className="w-full py-3 sm:py-4 text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 rounded-lg font-medium text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 transition-transform transform hover:scale-[1.02]"
               >
                 <i className="bi bi-lock-fill"></i> PAY NOW
               </button>

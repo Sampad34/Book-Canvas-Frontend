@@ -14,7 +14,7 @@ export const ProductDetails = () => {
   UseTitle(product.name);
 
   useEffect(() => {
-    async function fetchProducts() {
+    async function fetchProduct() {
       try {
         const data = await getProduct(id);
         setProduct(data);
@@ -26,7 +26,7 @@ export const ProductDetails = () => {
         });
       }
     }
-    fetchProducts();
+    fetchProduct();
   }, [id]);
 
   useEffect(() => {
@@ -34,27 +34,28 @@ export const ProductDetails = () => {
   }, [cartList, product.id]);
 
   return (
-    <main className="px-4 md:px-10 lg:px-20 py-10">
-      <section>
-        <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-900 dark:text-slate-200 mb-4">
+    <main className="px-4 sm:px-6 md:px-10 lg:px-20 py-10 bg-gray-50 dark:bg-gray-900 min-h-screen">
+      <section className="max-w-7xl mx-auto">
+        {/* Product Header */}
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-gray-900 dark:text-slate-100 mb-3">
           {product.name}
         </h1>
-        <p className="text-lg md:text-xl text-center text-gray-700 dark:text-slate-300 mb-8">
+        <p className="text-gray-700 dark:text-slate-300 text-center text-lg sm:text-xl mb-8">
           {product.overview}
         </p>
 
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-10">
+        <div className="flex flex-col lg:flex-row gap-10 lg:items-start justify-center">
           {/* Product Image */}
-          <div className="flex-shrink-0 max-w-md w-full rounded-lg overflow-hidden shadow-lg">
+          <div className="flex-shrink-0 w-full lg:w-1/2 max-w-md rounded-lg overflow-hidden shadow-lg">
             <img
               src={`${process.env.REACT_APP_HOST}${product.poster}`}
               alt={product.name}
-              className="w-full h-auto object-cover"
+              className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
             />
           </div>
 
           {/* Product Info */}
-          <div className="max-w-xl w-full space-y-5">
+          <div className="flex-1 w-full max-w-xl flex flex-col gap-5">
             <p className="text-3xl font-bold text-gray-900 dark:text-slate-200">
               ${product.price}
             </p>
@@ -67,52 +68,55 @@ export const ProductDetails = () => {
                   BEST SELLER
                 </span>
               )}
-              {product.in_stock && (
+              {product.in_stock ? (
                 <span className="bg-emerald-50 text-emerald-600 font-semibold px-3 py-1 rounded-lg border">
                   IN STOCK
                 </span>
-              )}
-              {!product.in_stock && (
+              ) : (
                 <span className="bg-rose-50 text-rose-600 font-semibold px-3 py-1 rounded-lg border">
                   OUT OF STOCK
                 </span>
               )}
-              <span className="bg-blue-50 text-blue-600 font-semibold px-3 py-1 rounded-lg border">
-                {product.size} MB
-              </span>
+              {product.size && (
+                <span className="bg-blue-50 text-blue-600 font-semibold px-3 py-1 rounded-lg border">
+                  {product.size} MB
+                </span>
+              )}
             </div>
 
-            <div>
+            <div className="flex flex-col sm:flex-row sm:gap-4 gap-3">
               {!inCart ? (
                 <button
                   onClick={() => addToCart(product)}
                   disabled={!product.in_stock}
-                  className={`w-full sm:w-auto inline-flex items-center justify-center py-3 px-6 text-lg font-medium text-white rounded-lg shadow-lg transition-all duration-300 hover:bg-blue-800 ${
+                  className={`flex-1 inline-flex items-center justify-center gap-2 py-3 px-6 text-lg font-medium text-white rounded-lg shadow-lg transition-colors duration-300 hover:scale-105 ${
                     product.in_stock
-                      ? "bg-blue-700 cursor-pointer"
+                      ? "bg-blue-700 hover:bg-blue-800"
                       : "bg-gray-400 cursor-not-allowed"
                   }`}
                 >
-                  Add To Cart <i className="ml-2 bi bi-plus-lg"></i>
+                  Add To Cart <i className="bi bi-plus-lg"></i>
                 </button>
               ) : (
                 <button
                   onClick={() => removeFromCart(product)}
                   disabled={!product.in_stock}
-                  className={`w-full sm:w-auto inline-flex items-center justify-center py-3 px-6 text-lg font-medium text-white rounded-lg shadow-lg transition-all duration-300 hover:bg-red-800 ${
+                  className={`flex-1 inline-flex items-center justify-center gap-2 py-3 px-6 text-lg font-medium text-white rounded-lg shadow-lg transition-colors duration-300 hover:scale-105 ${
                     product.in_stock
-                      ? "bg-red-600 cursor-pointer"
+                      ? "bg-red-600 hover:bg-red-700"
                       : "bg-gray-400 cursor-not-allowed"
                   }`}
                 >
-                  Remove Item <i className="ml-2 bi bi-trash3"></i>
+                  Remove Item <i className="bi bi-trash3"></i>
                 </button>
               )}
             </div>
 
-            <p className="text-gray-700 dark:text-slate-300 leading-relaxed">
-              {product.long_description}
-            </p>
+            {product.long_description && (
+              <p className="text-gray-700 dark:text-slate-300 leading-relaxed mt-5">
+                {product.long_description}
+              </p>
+            )}
           </div>
         </div>
       </section>
