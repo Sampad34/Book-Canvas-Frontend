@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import study from "../../../assets/images/study.jpg"
 
 export const Hero = () => {
   return (
@@ -25,7 +26,7 @@ export const Hero = () => {
       {/* Visual Section */}
       <div className="flex-1 flex justify-center lg:justify-end">
         <img
-          src="https://cdn.pixabay.com/photo/2017/03/07/13/49/laptop-2123437_1280.jpg"
+          src={study}
           alt="Laptop Hero"
           className="w-full max-w-md sm:max-w-lg md:max-w-xl rounded-lg shadow-xl"
         />
