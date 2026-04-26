@@ -6,14 +6,13 @@ import { Faq } from "./Components/Faq";
 
 export const HomePage = () => {
   UseTitle("Get access to Computer Science Ebooks");
+  
   return (
     <main>
-      <div>
-        <Hero />
-        <FeatureProducts />
-        <Testimonials />
-        <Faq />
-      </div>
+      <Hero />
+      <FeatureProducts />
+      <Testimonials />
+      <Faq />
     </main>
   );
 };

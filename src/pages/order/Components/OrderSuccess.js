@@ -2,33 +2,63 @@ import { Link } from "react-router-dom";
 
 export const OrderSuccess = ({ data }) => {
   return (
-    <section className="flex flex-col items-center justify-center text-center max-w-3xl sm:max-w-4xl mx-auto my-10 px-4 py-8 border rounded-lg dark:border-slate-700 dark:bg-gray-800 dark:text-slate-100 shadow-md">
-      
-      {/* Success Icon & Message */}
-      <div className="mb-6 flex flex-col items-center">
-        <span className="bi bi-check-circle text-green-600 text-6xl sm:text-7xl mb-4"></span>
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-2">
-          Thank you, {data.user.name}!
-        </h2>
-        <p className="text-gray-700 dark:text-gray-300 text-base sm:text-lg">
-          Your Order ID: <span className="font-medium">{data.id}</span>
-        </p>
-      </div>
+    <div className="max-w-2xl mx-auto px-4">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-center">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4">
+            <i className="bi bi-check-lg text-4xl text-green-500"></i>
+          </div>
+          <h2 className="text-2xl font-bold text-white">Payment Successful!</h2>
+          <p className="text-green-100 mt-1">Thank you for your purchase</p>
+        </div>
 
-      {/* Order & Payment Info */}
-      <div className="mb-6 text-gray-600 dark:text-gray-400 text-sm sm:text-base space-y-2">
-        <p>Your order is confirmed.</p>
-        <p>Please check your email (<span className="font-medium text-blue-500">{data.user.email}</span>) for the eBook.</p>
-        <p>Payment ID: <span className="font-medium">xyz_123456789</span></p>
-      </div>
+        <div className="p-6">
+          <div className="space-y-3 mb-6">
+            <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+              <span className="text-gray-600 dark:text-gray-400">Order ID</span>
+              <span className="font-mono font-semibold text-gray-900 dark:text-white">
+                {data?.id}
+              </span>
+            </div>
+            <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+              <span className="text-gray-600 dark:text-gray-400">
+                Customer Name
+              </span>
+              <span className="font-semibold text-gray-900 dark:text-white">
+                {data?.user?.name}
+              </span>
+            </div>
+            <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+              <span className="text-gray-600 dark:text-gray-400">Email</span>
+              <span className="font-semibold text-gray-900 dark:text-white">
+                {data?.user?.email}
+              </span>
+            </div>
+            <div className="flex justify-between py-2">
+              <span className="text-gray-600 dark:text-gray-400">
+                Amount Paid
+              </span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                ${data?.amount_paid?.toFixed(2)}
+              </span>
+            </div>
+          </div>
 
-      {/* Continue Shopping Button */}
-      <Link
-        to="/products"
-        className="inline-flex items-center justify-center bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-medium rounded-lg text-base sm:text-lg px-6 py-3 transition-all duration-200"
-      >
-        Continue Shopping <i className="ml-2 bi bi-cart"></i>
-      </Link>
-    </section>
+          <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-4 mb-6">
+            <p className="text-sm text-green-700 dark:text-green-300 flex items-center gap-2">
+              <i className="bi bi-envelope-paper"></i>
+              Confirmation email sent to {data?.user?.email}
+            </p>
+          </div>
+
+          <Link
+            to="/products"
+            className="block w-full text-center py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
+            Continue Shopping
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 };

@@ -14,31 +14,36 @@ export const ProductCard = ({ product }) => {
   }, [cartList, id]);
 
   return (
-    <div className="flex flex-col bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 max-w-sm w-full mx-auto">
+    <div className="group flex flex-col bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 max-w-sm w-full mx-auto overflow-hidden">
       
       {/* Product Image */}
-      <Link to={`/products/${id}`} className="relative block overflow-hidden rounded-t-2xl">
+      <Link to={`/products/${id}`} className="relative block overflow-hidden">
         {best_seller && (
-          <span className="absolute top-3 left-3 px-2 py-1 bg-orange-500 text-white text-xs font-semibold rounded-full shadow-sm z-10">
-            Best Seller
+          <span className="absolute top-3 left-3 z-10 px-2.5 py-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-semibold rounded-full shadow-md">
+            ⭐ Best Seller
           </span>
         )}
         <img
-          className="w-full h-64 sm:h-72 md:h-80 object-cover transform transition-transform duration-300 hover:scale-105"
+          className="w-full h-64 sm:h-72 object-cover transition-transform duration-500 group-hover:scale-110"
           src={`${process.env.REACT_APP_HOST}${poster}`}
           alt={name}
         />
+        {!in_stock && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <span className="px-3 py-1 bg-red-500 text-white font-semibold rounded-full">Out of Stock</span>
+          </div>
+        )}
       </Link>
 
       {/* Product Info */}
       <div className="p-5 flex flex-col gap-3">
         <Link to={`/products/${id}`}>
-          <h5 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-white hover:text-indigo-600 transition-colors truncate">
+          <h5 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors truncate">
             {name}
           </h5>
         </Link>
 
-        <p className="text-gray-700 dark:text-gray-400 text-sm sm:text-base line-clamp-3">
+        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
           {overview}
         </p>
 
@@ -46,8 +51,8 @@ export const ProductCard = ({ product }) => {
           <Ratings rating={rating} />
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mt-3">
-          <span className="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-gray-200">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mt-2">
+          <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             ${price}
           </span>
 
@@ -55,8 +60,10 @@ export const ProductCard = ({ product }) => {
             <button
               onClick={() => addToCart(product)}
               disabled={!in_stock}
-              className={`w-full sm:w-auto flex items-center justify-center gap-2 py-2 px-4 text-sm sm:text-base font-medium rounded-lg transition-colors duration-200 ${
-                in_stock ? "bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white" : "bg-blue-300 cursor-not-allowed text-white"
+              className={`w-full sm:w-auto flex items-center justify-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 ${
+                in_stock 
+                  ? "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md" 
+                  : "bg-gray-400 cursor-not-allowed text-white"
               }`}
             >
               Add To Cart <i className="bi bi-plus-lg"></i>
@@ -64,12 +71,13 @@ export const ProductCard = ({ product }) => {
           ) : (
             <button
               onClick={() => removeFromCart(product)}
-              disabled={!in_stock}
-              className={`w-full sm:w-auto flex items-center justify-center gap-2 py-2 px-4 text-sm sm:text-base font-medium rounded-lg transition-colors duration-200 ${
-                in_stock ? "bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white" : "bg-red-300 cursor-not-allowed text-white"
+              className={`w-full sm:w-auto flex items-center justify-center gap-2 py-2.5 px-5 text-sm font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 ${
+                in_stock 
+                  ? "bg-gradient-to-r from-rose-500 to-red-500 hover:from-rose-600 hover:to-red-600 text-white shadow-md" 
+                  : "bg-gray-400 cursor-not-allowed text-white"
               }`}
             >
-              Remove Item <i className="bi bi-trash3"></i>
+              Remove <i className="bi bi-trash3"></i>
             </button>
           )}
         </div>

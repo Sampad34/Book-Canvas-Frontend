@@ -4,15 +4,15 @@ export const Faq = () => {
   const faqs = [
     {
       id: 1,
-      question: "Why should I choose CodeBook for learning?",
+      question: "Why should I choose BookVerse for learning?",
       answer:
-        "CodeBook offers a vast library of curated programming and computer science eBooks. Whether you're a beginner or an expert, our platform provides structured, high-quality content to accelerate your learning journey.",
+        "BookVerse offers a vast library of curated programming and computer science eBooks. Whether you're a beginner or an expert, our platform provides structured, high-quality content to accelerate your learning journey.",
     },
     {
       id: 2,
       question: "Can I read my eBooks on mobile devices?",
       answer:
-        "Absolutely! CodeBook is fully mobile-friendly. Access your purchased eBooks on smartphones and tablets anytime, anywhere, without any restrictions.",
+        "Absolutely! BookVerse is fully mobile-friendly. Access your purchased eBooks on smartphones and tablets anytime, anywhere, without any restrictions.",
     },
     {
       id: 3,
@@ -24,23 +24,25 @@ export const Faq = () => {
       id: 4,
       question: "Do you support international payments?",
       answer:
-        "Yes, CodeBook supports payments from all major international credit and debit cards, PayPal, and other global payment providers for your convenience.",
+        "Yes, BookVerse supports payments from all major international credit and debit cards, PayPal, and other global payment providers for your convenience.",
     },
   ];
 
   return (
-    <section className="my-12 sm:my-16 px-4 sm:px-6 md:px-8 lg:px-16 py-8 border rounded-xl shadow-md dark:border-slate-700 dark:bg-gray-800 transition-all">
-      
-      {/* Header */}
-      <h1 className="text-2xl sm:text-3xl md:text-4xl text-center font-semibold dark:text-slate-100 mb-6 underline underline-offset-8">
-        Frequently Asked Questions
-      </h1>
+    <section className="py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-16">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold dark:text-slate-100">
+            Frequently Asked <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Questions</span>
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 mt-2">Everything you need to know</p>
+        </div>
 
-      {/* Accordion Container */}
-      <div className="space-y-4 md:space-y-6">
-        {faqs.map((faq) => (
-          <Accordion key={faq.id} faq={faq} />
-        ))}
+        <div className="space-y-4">
+          {faqs.map((faq) => (
+            <Accordion key={faq.id} faq={faq} />
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -1,4 +1,3 @@
-// services/authService.js
 import { handleResponse } from "./utils";
 
 export async function login(authDetail) {
@@ -11,8 +10,8 @@ export async function login(authDetail) {
   const data = await handleResponse(response);
 
   if (data?.accessToken && data?.user) {
-    sessionStorage.setItem("token", JSON.stringify(data.accessToken));
-    sessionStorage.setItem("cbid", JSON.stringify(data.user.id));
+    sessionStorage.setItem("token", data.accessToken);
+    sessionStorage.setItem("cbid", data.user.id);
   }
 
   return data;
@@ -28,8 +27,8 @@ export async function register(authDetail) {
   const data = await handleResponse(response);
 
   if (data?.accessToken && data?.user) {
-    sessionStorage.setItem("token", JSON.stringify(data.accessToken));
-    sessionStorage.setItem("cbid", JSON.stringify(data.user.id));
+    sessionStorage.setItem("token", data.accessToken);
+    sessionStorage.setItem("cbid", data.user.id);
   }
 
   return data;

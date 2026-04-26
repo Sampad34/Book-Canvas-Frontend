@@ -11,7 +11,11 @@ export const DropdownLoggedIn = ({ setDropdown }) => {
     async function fetchData() {
       try {
         const data = await getUser();
-        data.email ? setUser(data) : handleLogout();
+        if (data?.email) {
+          setUser(data);
+        } else {
+          handleLogout();
+        }
       } catch (error) {
         toast.error(error.message || "Failed to fetch user info", {
           closeButton: true,
@@ -21,54 +25,70 @@ export const DropdownLoggedIn = ({ setDropdown }) => {
       }
     }
     fetchData();
-  }, []); //eslint-disable-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleLogout() {
     logout();
     setDropdown(false);
     navigate("/");
+    toast.info("Logged out successfully", {
+      position: "bottom-center",
+      autoClose: 2000,
+    });
   }
 
   return (
-    <div
-      id="dropdownAvatar"
-      className="absolute top-14 right-0 z-20 w-48 sm:w-52 bg-white dark:bg-gray-700 rounded-lg shadow-lg divide-y divide-gray-100 dark:divide-gray-600 transition-transform transform scale-95 origin-top-right animate-in fade-in-80"
-    >
+    <div className="py-2">
       {/* User Info */}
-      <div className="py-3 px-4 text-sm sm:text-base text-gray-900 dark:text-white truncate">
-        <div className="font-medium truncate">{user.email}</div>
+      <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+        <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+          {user.email || "Guest User"}
+        </p>
+        {user.name && (
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{user.name}</p>
+        )}
       </div>
 
       {/* Navigation Links */}
-      <ul className="py-1 text-sm sm:text-base text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+      <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
         <li>
           <Link
             onClick={() => setDropdown(false)}
             to="/products"
-            className="block py-2 px-4 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white transition-colors duration-200"
+            className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
           >
-            All eBooks
+            <i className="bi bi-grid"></i> All eBooks
           </Link>
         </li>
         <li>
           <Link
             onClick={() => setDropdown(false)}
             to="/dashboard"
-            className="block py-2 px-4 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white transition-colors duration-200"
+            className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
           >
-            Dashboard
+            <i className="bi bi-speedometer2"></i> Dashboard
+          </Link>
+        </li>
+        <li>
+          <Link
+            onClick={() => setDropdown(false)}
+            to="/cart"
+            className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+          >
+            <i className="bi bi-cart"></i> Cart
           </Link>
         </li>
       </ul>
 
       {/* Logout Button */}
-      <div className="py-1">
-        <span
+      <div className="border-t border-gray-200 dark:border-gray-700">
+        <button
           onClick={handleLogout}
-          className="cursor-pointer block py-2 px-4 text-sm sm:text-base text-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white transition-colors duration-200"
+          className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
         >
-          Log out
-        </span>
+          <i className="bi bi-box-arrow-right"></i> Log out
+        </button>
       </div>
     </div>
   );

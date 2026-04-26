@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 export const Checkout = ({ setCheckout }) => {
   const { total, cartList, clearCart } = useCart();
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -28,9 +29,11 @@ export const Checkout = ({ setCheckout }) => {
 
   async function handleOrderSubmit(event) {
     event.preventDefault();
+    setLoading(true);
+
     try {
       const data = await createOrder(cartList, total, user);
-      clearCart();
+      clearCart(); // FIXED: No parameter needed
       navigate("/order-summary", { state: { data: data, status: true } });
     } catch (error) {
       toast.error(error.message || "Order failed", {
@@ -39,135 +42,134 @@ export const Checkout = ({ setCheckout }) => {
         autoClose: 5000,
       });
       navigate("/order-summary", { state: { status: false } });
+    } finally {
+      setLoading(false);
     }
   }
 
   if (!user) {
-    return <p className="text-center mt-10 text-lg dark:text-slate-200">Loading user info...</p>;
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-8">
+          <p className="text-lg dark:text-white">Loading user info...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
     <section>
       {/* Overlay */}
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+      <div
+        className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
+        onClick={() => setCheckout(false)}
+      ></div>
 
       {/* Modal */}
-      <div
-        id="checkout-modal"
-        tabIndex="-1"
-        className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4 sm:p-6"
-        aria-modal="true"
-        role="dialog"
-      >
-        <div className="relative w-full max-w-md sm:max-w-lg md:max-w-xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
-          
+      <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4">
+        <div className="relative w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up">
           {/* Close Button */}
           <button
             onClick={() => setCheckout(false)}
-            type="button"
-            className="absolute top-3 right-3 text-gray-400 hover:text-gray-900 dark:hover:text-white bg-transparent rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-white bg-transparent rounded-lg p-1 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
           >
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-            <span className="sr-only">Close modal</span>
+            <i className="bi bi-x-lg text-xl"></i>
           </button>
 
           {/* Modal Content */}
-          <div className="px-6 py-8 sm:px-8 md:px-10">
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center justify-center gap-2">
-              <i className="bi bi-credit-card"></i> Card Payment
+          <div className="p-6 sm:p-8">
+            <h3 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              <i className="bi bi-credit-card mr-2"></i>
+              Payment Details
             </h3>
 
             <form onSubmit={handleOrderSubmit} className="space-y-4">
-              {/* Name */}
               <div>
-                <label className="block mb-1 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
-                  Name
+                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Full Name
                 </label>
                 <input
                   type="text"
-                  value={user.name}
+                  value={user.name || ""}
                   disabled
-                  className="w-full p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                  className="w-full p-3 text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl"
                 />
               </div>
 
-              {/* Email */}
               <div>
-                <label className="block mb-1 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
-                  Email
+                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Email Address
                 </label>
                 <input
                   type="email"
-                  value={user.email}
+                  value={user.email || ""}
                   disabled
-                  className="w-full p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                  className="w-full p-3 text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl"
                 />
               </div>
 
-              {/* Card Number */}
               <div>
-                <label className="block mb-1 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
+                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
                   Card Number
                 </label>
                 <input
                   type="text"
-                  value="4215 6254 6259 7845"
+                  value="4242 4242 4242 4242"
                   disabled
-                  className="w-full p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
+                  className="w-full p-3 text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl font-mono"
                 />
               </div>
 
-              {/* Expiry Month/Year */}
-              <div className="flex gap-3">
-                <input
-                  type="text"
-                  value="03"
-                  disabled
-                  className="w-1/2 p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
-                />
-                <input
-                  type="text"
-                  value="27"
-                  disabled
-                  className="w-1/2 p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    MM/YY
+                  </label>
+                  <input
+                    type="text"
+                    value="12/26"
+                    disabled
+                    className="w-full p-3 text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    CVC
+                  </label>
+                  <input
+                    type="text"
+                    value="123"
+                    disabled
+                    className="w-full p-3 text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl"
+                  />
+                </div>
               </div>
 
-              {/* Security Code */}
-              <div>
-                <label className="block mb-1 text-sm sm:text-base font-medium text-gray-900 dark:text-gray-300">
-                  Security Code
-                </label>
-                <input
-                  type="text"
-                  value="523"
-                  disabled
-                  className="w-full p-3 text-gray-900 dark:text-white text-sm sm:text-base bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg"
-                />
+              <div className="text-center py-3">
+                <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  ${total.toFixed(2)}
+                </p>
               </div>
 
-              {/* Total */}
-              <p className="text-center text-2xl sm:text-3xl font-bold text-lime-500 my-3">
-                ${total.toFixed(2)}
-              </p>
-
-              {/* Submit */}
               <button
                 type="submit"
-                className="w-full py-3 sm:py-4 text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 rounded-lg font-medium text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 transition-transform transform hover:scale-[1.02]"
+                disabled={loading}
+                className={`w-full py-3 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg"
+                }`}
               >
-                <i className="bi bi-lock-fill"></i> PAY NOW
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <i className="bi bi-hourglass-split animate-spin"></i>{" "}
+                    Processing...
+                  </span>
+                ) : (
+                  <span className="flex items-center justify-center gap-2">
+                    <i className="bi bi-lock-fill"></i> Pay Now
+                  </span>
+                )}
               </button>
             </form>
           </div>

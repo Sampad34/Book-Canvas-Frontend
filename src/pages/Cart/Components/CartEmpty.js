@@ -2,24 +2,28 @@ import { Link } from "react-router-dom";
 
 export const CartEmpty = () => {
   return (
-    <section className="flex flex-col items-center justify-center text-center max-w-md sm:max-w-xl mx-auto my-12 sm:my-16 p-6 sm:p-8 border rounded-xl dark:border-slate-700 dark:bg-gray-800">
-      
-      <div className="mb-6 sm:mb-8">
-        <span className="bi bi-cart text-green-500 text-7xl sm:text-8xl mb-4 inline-block"></span>
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-2 dark:text-slate-100">
-          Oops! Your cart looks empty!
-        </h2>
-        <p className="text-sm sm:text-base md:text-lg text-gray-600 dark:text-slate-300">
-          Add eBooks to your cart from our store collection.
-        </p>
-      </div>
+    <section className="min-h-[60vh] flex items-center justify-center px-4">
+      <div className="text-center">
+        <div className="mb-6">
+          <span className="bi bi-cart-x text-7xl sm:text-8xl text-gray-400"></span>
+        </div>
 
-      <Link
-        to="/"
-        className="inline-flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 font-medium rounded-lg text-base sm:text-lg md:text-xl px-6 sm:px-8 py-3 sm:py-4 transition-transform transform hover:scale-[1.02]"
-      >
-        Continue Shopping <i className="ml-2 bi bi-cart"></i>
-      </Link>
+        <h2 className="text-2xl sm:text-3xl font-semibold dark:text-slate-100 mb-2">
+          Your cart is empty
+        </h2>
+
+        <p className="text-gray-500 dark:text-gray-400 mb-8">
+          Looks like you haven't added any items to your cart yet.
+        </p>
+
+        <Link
+          to="/products"
+          className="inline-flex items-center justify-center gap-2 text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 font-semibold rounded-xl px-6 py-3 transition-all duration-300 transform hover:scale-105 shadow-lg"
+        >
+          <i className="bi bi-cart-plus"></i>
+          Start Shopping
+        </Link>
+      </div>
     </section>
   );
 };

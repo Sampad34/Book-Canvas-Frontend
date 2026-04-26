@@ -33,37 +33,41 @@ export const Testimonials = () => {
   ];
 
   return (
-    <section className="my-16 md:my-20 px-4 sm:px-6 md:px-12 lg:px-16">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl text-center font-extrabold dark:text-slate-100 mb-12 underline underline-offset-8">
-        What Our Students Say
-      </h1>
+    <section className="py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-16 bg-gray-50 dark:bg-gray-800/50">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold dark:text-slate-100">
+            What <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Students Say</span>
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 mt-2">Join thousands of happy learners</p>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10">
-        {testimonials.map((t, index) => (
-          <figure
-            key={index}
-            className="flex flex-col justify-between items-center p-6 bg-white rounded-xl border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 text-center transition-transform transform hover:-translate-y-2 hover:shadow-xl"
-          >
-            <blockquote className="mb-6 text-gray-600 dark:text-gray-300">
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                {t.title}
-              </h3>
-              <p className="text-sm sm:text-base font-light">{t.text}</p>
-            </blockquote>
-
-            <figcaption className="flex flex-col items-center space-y-2">
-              <img
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover"
-                src={t.image}
-                alt={t.name}
-              />
-              <div className="text-center sm:text-left">
-                <p className="font-medium text-gray-900 dark:text-white">{t.name}</p>
-                <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400">{t.role}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {testimonials.map((t, index) => (
+            <div
+              key={index}
+              className="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700"
+            >
+              <div className="flex items-center gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <i key={i} className="bi bi-star-fill text-yellow-400 text-sm"></i>
+                ))}
               </div>
-            </figcaption>
-          </figure>
-        ))}
+              <p className="text-gray-600 dark:text-gray-300 mb-6 italic">"{t.text}"</p>
+              <div className="flex items-center gap-3">
+                <img
+                  className="w-12 h-12 rounded-full object-cover ring-2 ring-blue-500"
+                  src={t.image}
+                  alt={t.name}
+                />
+                <div>
+                  <p className="font-semibold text-gray-900 dark:text-white">{t.name}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{t.role}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

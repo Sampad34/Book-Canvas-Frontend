@@ -2,34 +2,42 @@ import { Link } from "react-router-dom";
 
 export const OrderFail = () => {
   return (
-    <section className="flex flex-col items-center justify-center text-center max-w-3xl sm:max-w-4xl mx-auto my-10 px-4 py-8 border rounded-lg dark:border-slate-700 dark:bg-gray-800 dark:text-slate-100 shadow-md">
-      
-      {/* Icon & Message */}
-      <div className="mb-6 flex flex-col items-center">
-        <span className="bi bi-exclamation-circle text-red-500 text-6xl sm:text-7xl mb-4"></span>
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-2">
-          Payment Failed
-        </h2>
-        <p className="text-gray-700 dark:text-gray-300 text-base sm:text-lg">
-          Your payment could not be processed. Please try again.
-        </p>
-      </div>
+    <div className="max-w-2xl mx-auto px-4">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-gradient-to-r from-red-500 to-rose-600 p-6 text-center">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4">
+            <i className="bi bi-x-lg text-4xl text-red-500"></i>
+          </div>
+          <h2 className="text-2xl font-bold text-white">Payment Failed</h2>
+          <p className="text-red-100 mt-1">
+            Something went wrong with your transaction
+          </p>
+        </div>
 
-      {/* Support Info */}
-      <div className="mb-6 text-gray-600 dark:text-gray-400 text-sm sm:text-base">
-        <p>Your order is not confirmed.</p>
-        <p>
-          Contact <span className="font-medium text-blue-500">codebook@example.com</span> for support.
-        </p>
-      </div>
+        <div className="p-6">
+          <div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 mb-6">
+            <p className="text-sm text-red-700 dark:text-red-300 flex items-center gap-2">
+              <i className="bi bi-exclamation-triangle-fill"></i>
+              Your order has not been confirmed. Please try again.
+            </p>
+          </div>
 
-      {/* Action Button */}
-      <Link
-        to="/cart"
-        className="inline-flex items-center justify-center bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-medium rounded-lg text-base sm:text-lg px-6 py-3 transition-all duration-200"
-      >
-        Check Cart Again <i className="ml-2 bi bi-cart"></i>
-      </Link>
-    </section>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              to="/cart"
+              className="flex-1 text-center py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-300"
+            >
+              Return to Cart
+            </Link>
+            <Link
+              to="/products"
+              className="flex-1 text-center py-3 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300"
+            >
+              Continue Shopping
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
