@@ -1,3 +1,5 @@
+// src/pages/Cart/Components/CheckOut.js
+
 import { useEffect, useState } from "react";
 import { useCart } from "../../../context";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +35,7 @@ export const Checkout = ({ setCheckout }) => {
 
     try {
       const data = await createOrder(cartList, total, user);
-      clearCart(); // FIXED: No parameter needed
+      clearCart();
       navigate("/order-summary", { state: { data: data, status: true } });
     } catch (error) {
       toast.error(error.message || "Order failed", {
@@ -47,41 +49,80 @@ export const Checkout = ({ setCheckout }) => {
     }
   }
 
+  const totalItems = cartList.reduce(
+    (sum, item) => sum + (item.quantity || 1),
+    0,
+  );
+
   if (!user) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-8">
-          <p className="text-lg dark:text-white">Loading user info...</p>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-300">
+            Loading user info...
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <section>
+    <>
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm transition-opacity"
         onClick={() => setCheckout(false)}
       ></div>
 
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4">
-        <div className="relative w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up">
-          {/* Close Button */}
-          <button
-            onClick={() => setCheckout(false)}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-white bg-transparent rounded-lg p-1 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-          >
-            <i className="bi bi-x-lg text-xl"></i>
-          </button>
+        <div className="relative w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden animate-fade-in-up">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <i className="bi bi-credit-card"></i>
+                Checkout
+              </h3>
+              <button
+                onClick={() => setCheckout(false)}
+                className="text-white/80 hover:text-white bg-white/20 hover:bg-white/30 rounded-lg p-1 transition"
+              >
+                <i className="bi bi-x-lg text-xl"></i>
+              </button>
+            </div>
+          </div>
 
-          {/* Modal Content */}
-          <div className="p-6 sm:p-8">
-            <h3 className="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              <i className="bi bi-credit-card mr-2"></i>
-              Payment Details
-            </h3>
+          {/* Content */}
+          <div className="p-6 max-h-[70vh] overflow-y-auto">
+            {/* Order Summary */}
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                <i className="bi bi-cart"></i>
+                Order Summary ({totalItems} items)
+              </h4>
+              <div className="space-y-2 max-h-48 overflow-y-auto">
+                {cartList.map((item) => (
+                  <div key={item.id} className="flex justify-between text-sm">
+                    <span className="text-gray-600 dark:text-gray-400">
+                      {item.name} x{item.quantity || 1}
+                    </span>
+                    <span className="text-gray-900 dark:text-white font-medium">
+                      ${(item.price * (item.quantity || 1)).toFixed(2)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="border-t border-gray-200 dark:border-gray-600 mt-3 pt-3">
+                <div className="flex justify-between font-bold">
+                  <span className="text-gray-900 dark:text-white">Total</span>
+                  <span className="text-xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    ${total.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </div>
 
             <form onSubmit={handleOrderSubmit} className="space-y-4">
               <div>
@@ -110,7 +151,7 @@ export const Checkout = ({ setCheckout }) => {
 
               <div>
                 <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Card Number
+                  Card Number (Demo)
                 </label>
                 <input
                   type="text"
@@ -123,7 +164,7 @@ export const Checkout = ({ setCheckout }) => {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-                    MM/YY
+                    Expiry Date
                   </label>
                   <input
                     type="text"
@@ -145,12 +186,6 @@ export const Checkout = ({ setCheckout }) => {
                 </div>
               </div>
 
-              <div className="text-center py-3">
-                <p className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  ${total.toFixed(2)}
-                </p>
-              </div>
-
               <button
                 type="submit"
                 disabled={loading}
@@ -167,7 +202,7 @@ export const Checkout = ({ setCheckout }) => {
                   </span>
                 ) : (
                   <span className="flex items-center justify-center gap-2">
-                    <i className="bi bi-lock-fill"></i> Pay Now
+                    <i className="bi bi-lock-fill"></i> Pay ${total.toFixed(2)}
                   </span>
                 )}
               </button>
@@ -175,6 +210,6 @@ export const Checkout = ({ setCheckout }) => {
           </div>
         </div>
       </div>
-    </section>
+    </>
   );
 };
