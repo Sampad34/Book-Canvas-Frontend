@@ -42,7 +42,7 @@ export const Header = () => {
         <Link to="/" className="flex items-center">
           <img src={Logo} className="h-8 sm:h-10 mr-2 sm:mr-3" alt="BookWorld Logo" />
           <span className="self-center text-lg sm:text-xl font-semibold dark:text-white">
-            BookWorld
+            BookVerse
           </span>
         </Link>
 
