@@ -95,7 +95,7 @@ export const CartProvider = ({ children }) => {
   function updateQuantity(productId, newQuantity) {
     const updatedList = state.cartList.map((item) => {
       if (item.id === productId) {
-        const quantityDiff = newQuantity - (item.quantity || 1);
+        // FIXED: Removed unused variable 'quantityDiff'
         return { ...item, quantity: newQuantity };
       }
       return item;
