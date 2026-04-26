@@ -102,6 +102,12 @@ export const Header = () => {
   // Toggle dark mode
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+    // Show toast notification for theme change
+    toast.info(`${!darkMode ? "Dark" : "Light"} mode activated`, {
+      position: "bottom-center",
+      autoClose: 1500,
+      icon: !darkMode ? "🌙" : "☀️",
+    });
   };
 
   // Get user initials for avatar
@@ -125,16 +131,28 @@ export const Header = () => {
     <header className="sticky top-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow-lg transition-colors duration-300">
       {/* Main Navigation */}
       <nav className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-3 sm:px-6 lg:px-8">
-        {/* Logo */}
+        {/* Logo with Website Icon */}
         <Link to="/" className="flex items-center group">
-          <img
-            src={Logo}
-            className="h-8 sm:h-10 mr-2 sm:mr-3 transition-transform group-hover:scale-105"
-            alt="BookWorld Logo"
-          />
-          <span className="self-center text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            BookVerse
-          </span>
+          {/* Logo Image */}
+          <div className="relative">
+            <img
+              src={Logo}
+              className="h-9 sm:h-11 w-auto mr-2 sm:mr-3 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+              alt="BookVerse Logo"
+            />
+            {/* Dark mode overlay effect for logo */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
+
+          {/* Website Name with Icon */}
+          <div className="flex flex-col items-start">
+            <span className="self-center text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent group-hover:from-blue-500 group-hover:to-indigo-500 transition-all duration-300">
+              BookVerse
+            </span>
+            <span className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
+              Read. Learn. Grow.
+            </span>
+          </div>
         </Link>
 
         {/* Search Bar - Desktop */}
@@ -155,23 +173,35 @@ export const Header = () => {
 
         {/* Right Actions */}
         <div className="flex items-center space-x-2 sm:space-x-3">
-          {/* Dark Mode Toggle */}
+          {/* Dark Mode Toggle Button - Enhanced */}
           <button
             onClick={toggleDarkMode}
-            className="relative p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 group"
+            className="relative group"
             aria-label="Toggle dark mode"
           >
-            {darkMode ? (
-              <i className="bi bi-sun-fill text-xl sm:text-2xl text-yellow-400 group-hover:rotate-45 transition-transform duration-300"></i>
-            ) : (
-              <i className="bi bi-moon-fill text-xl sm:text-2xl text-gray-700 dark:text-white group-hover:rotate-12 transition-transform duration-300"></i>
-            )}
+            <div className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 shadow-md">
+              {darkMode ? (
+                <div className="relative">
+                  <i className="bi bi-sun-fill text-xl sm:text-2xl text-yellow-400 group-hover:rotate-45 transition-transform duration-300"></i>
+                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+                </div>
+              ) : (
+                <div className="relative">
+                  <i className="bi bi-moon-fill text-xl sm:text-2xl text-gray-700 dark:text-white group-hover:rotate-12 transition-transform duration-300"></i>
+                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-indigo-400 rounded-full animate-pulse"></span>
+                </div>
+              )}
+            </div>
+            {/* Tooltip */}
+            <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+              {darkMode ? "Light Mode" : "Dark Mode"}
+            </span>
           </button>
 
           {/* Mobile Search Button */}
           <button
             onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
-            className="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+            className="md:hidden p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
             aria-label="Search"
           >
             <i className="bi bi-search text-xl text-gray-700 dark:text-white"></i>
@@ -179,7 +209,7 @@ export const Header = () => {
 
           {/* Cart with Enhanced UI */}
           <Link to="/cart" className="relative group" aria-label="Cart">
-            <div className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300">
+            <div className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 shadow-md">
               <i className="bi bi-cart-fill text-xl sm:text-2xl text-gray-700 dark:text-white group-hover:scale-110 transition-transform duration-300"></i>
             </div>
 
@@ -189,6 +219,11 @@ export const Header = () => {
                 {totalCartItems > 99 ? "99+" : totalCartItems}
               </div>
             )}
+
+            {/* Tooltip */}
+            <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+              Cart ({totalCartItems})
+            </span>
           </Link>
 
           {/* User Section */}
@@ -281,7 +316,7 @@ export const Header = () => {
               </Link>
               <Link
                 to="/register"
-                className="px-4 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg"
+                className="px-4 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
               >
                 Sign Up
               </Link>
@@ -292,7 +327,7 @@ export const Header = () => {
 
       {/* Mobile Search Bar */}
       {mobileSearchOpen && (
-        <div className="md:hidden px-4 pb-3 pt-2 border-t border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm">
+        <div className="md:hidden px-4 pb-3 pt-2 border-t border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm animate-fade-in-down">
           <form onSubmit={handleSearch} className="w-full">
             <div className="relative">
               <span className="bi bi-search absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400 dark:text-gray-500 text-base"></span>
